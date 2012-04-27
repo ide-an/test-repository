@@ -1,0 +1,80 @@
+Windows7(64bit)でGitを導入するメモ
+  松本(@ide_an)
+
+--------------------------------------------------------------------------------
+githubのヘルプを参考にGitをインストールする
+http://help.github.com/win-set-up-git/
+
+Git-1.7.10-preview20120409.exeをダウンロード
+インストーラを起動。指示通りに進める。
+Gitのインストールパス: C:\Program Files (x86)\Git
+設定を変えたのはショートカットアイコンを削ったところとTrueTypeフォントを使えるようにしたところ、それ以外はデフォルトの設定を使用。
+設定変えたところも別段本質的ではない
+以後gitを使うときはGit bashから利用していく
+
+--------------------------------------------------------------------------------
+Git bashで日本語を使えるようにする
+http://sinsengumi.net/blog/2011/08/msysgit%E3%81%AEgit-bash%E3%81%A7%E6%97%A5%E6%9C%AC%E8%AA%9E%E3%82%92%E4%BD%BF%E3%81%88%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%81%AA%E3%82%8B%E3%81%BE%E3%81%A7/
+
+まずlessのWindowsバイナリを取得する。これはgit logでの出力で世話になるプログラム(多分)
+http://nonn-et-twk.net/twk/windows-less-utf8
+で配布しているバイナリを使用する
+解凍したzipに入っているless.exeをC:\Program Files (x86)\Git\binにコピーする
+
+次にnkfバイナリの取得
+http://www.asuka.cx/software/nkf/files/nkf-2.0.8b.bin.tar.gz
+のバイナリを使用
+解凍したzipに入っているnkf.exeをC:\Program Files (x86)\Git\binにコピーする
+
+次に設定ファイルを弄る
+まずはC:\Program Files (x86)\Git\etc\inputrcを管理者権限で開いて編集
+変更前(15～18行目)
+set meta-flag on
+set input-meta on
+set output-meta off
+set convert-meta on
+
+変更後
+set meta-flag on
+set input-meta on
+set output-meta on
+set convert-meta off
+set kanji-code utf-8
+
+次にC:\Program Files (x86)\Git\etc\profileを編集
+これもやはり管理者権限で。というかC:\Program Files以下は全般的に管理者権限必要だよね・・・
+末尾に以下の行を追加(Vim使い仕様です)
+
+export GIT_EDITOR='/c/usr/bin/vim/gvim -c "setl fenc=utf-8"'
+export GIT_PAGER="nkf -s | less"
+
+※gitでのコミットメッセージに使うエディタはここじゃなくても~/.gitconfigで設定できる
+
+最後にgit bashのフォントを変更。タイトルバーを右クリック→プロパティから変更できる
+とりあえずMS ゴシックに変更。MS ゴシック許すまじな人は適当に処理してくだしあ
+--------------------------------------------------------------------------------
+~/.gitconfigを弄る
+
+ユーザー名とかlogまわりの色とかaliasとか
+ユーザー名の登録はcommitのために必要です、確か。
+個人的な意見としてはgit statusみたいな非破壊的な操作にalias振るのはいいけど
+git commitみたいに破壊的な操作に対してalias振るのは事故を誘発しそうでおすすめできない。
+
+[user]
+	name = ide-an
+	email = ideanweb@gmail.com
+[i18n]
+  commitencoding = UTF-8
+[color]
+  ui = auto
+[alias]
+  st = status
+  dif = diff
+
+--------------------------------------------------------------------------------
+githubにつなぐ
+
+先に上げたgithubのヘルプ読みながらやればできると思います
+http://help.github.com/win-set-up-git/
+
+sshの鍵作ってgithub上で公開鍵登録すればおｋ。APIトークン云々は多分関係ない
