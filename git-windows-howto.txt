@@ -41,15 +41,7 @@ set output-meta on
 set convert-meta off
 set kanji-code utf-8
 
-次にC:\Program Files (x86)\Git\etc\profileを編集
-これもやはり管理者権限で。というかC:\Program Files以下は全般的に管理者権限必要だよね・・・
-末尾に以下の行を追加
-
-export GIT_PAGER="nkf -s | less"
-
-※gitでのコミットメッセージに使うエディタはここじゃなくても~/.gitconfigで設定できる
-
-最後にgit bashのフォントを変更。タイトルバーを右クリック→プロパティから変更できる
+git bashのフォントを変更。タイトルバーを右クリック→プロパティから変更できる
 とりあえずMS ゴシックに変更。MS ゴシック許すまじな人は適当に処理してくだしあ
 --------------------------------------------------------------------------------
 ~/.gitconfigを弄る
@@ -64,6 +56,7 @@ git commitみたいに破壊的な操作に対してalias振るのは事故を�
 	email = ideanweb@gmail.com
 [core]
 	editor = gvim -c \"set fenc=utf-8\"
+	pager = nkf -w80 | LESSCHARSET=utf-8 less
 [i18n]
   commitencoding = UTF-8
 [color]
@@ -73,7 +66,9 @@ git commitみたいに破壊的な操作に対してalias振るのは事故を�
   dif = diff
 
 [core]のeditorはgit commitで-mを指定しなかった場合にテキストエディタを開く方法を指定している
-このコンフィグではgvimを開く
+このコンフィグではgvimを開く エンコーディングとしてutf-8を指定
+pagerはgit logなどで使用する
+オリジナルのlogがutf-8で保存されていて、それをutf-8(BOMなし)に変換→lessに食わせて表示(cp932?)させる
 --------------------------------------------------------------------------------
 githubにつなぐ
 
