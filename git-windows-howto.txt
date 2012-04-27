@@ -43,9 +43,8 @@ set kanji-code utf-8
 
 次にC:\Program Files (x86)\Git\etc\profileを編集
 これもやはり管理者権限で。というかC:\Program Files以下は全般的に管理者権限必要だよね・・・
-末尾に以下の行を追加(Vim使い仕様です)
+末尾に以下の行を追加
 
-export GIT_EDITOR='/c/usr/bin/vim/gvim -c "setl fenc=utf-8"'
 export GIT_PAGER="nkf -s | less"
 
 ※gitでのコミットメッセージに使うエディタはここじゃなくても~/.gitconfigで設定できる
@@ -63,6 +62,8 @@ git commitみたいに破壊的な操作に対してalias振るのは事故を�
 [user]
 	name = ide-an
 	email = ideanweb@gmail.com
+[core]
+	editor = gvim -c \"set fenc=utf-8\"
 [i18n]
   commitencoding = UTF-8
 [color]
@@ -71,6 +72,8 @@ git commitみたいに破壊的な操作に対してalias振るのは事故を�
   st = status
   dif = diff
 
+[core]のeditorはgit commitで-mを指定しなかった場合にテキストエディタを開く方法を指定している
+このコンフィグではgvimを開く
 --------------------------------------------------------------------------------
 githubにつなぐ
 
