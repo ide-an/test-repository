@@ -10,4 +10,5 @@ public class MyHelloWorldActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
     }
+    //日本語でコメント
 }
