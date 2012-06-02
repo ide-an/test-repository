@@ -77,3 +77,4 @@ http://help.github.com/win-set-up-git/
 
 sshの鍵作ってgithub上で公開鍵登録すればおｋ。APIトークン云々は多分関係ない
 
+hoge
